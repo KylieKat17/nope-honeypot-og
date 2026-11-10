@@ -1,0 +1,4 @@
+PyYAML>=6
+rich>=13
+# optional, only if you add packet-level detection (scapy is GPL-licensed, keep it a dependency, don't vendor it)
+# scapy>=2.5

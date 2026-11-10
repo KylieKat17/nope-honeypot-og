@@ -1,0 +1,32 @@
+# NOPE config. Anything left out falls back to the defaults in nope/config.py
+
+db_path: nope.db          # sqlite file for events, scores, blocks
+listen_host: 0.0.0.0
+
+decoys:
+  ssh:
+    enabled: true
+    port: 2222            # high port so your real sshd on 22 is untouched
+  redis:
+    enabled: true
+    port: 6379
+
+# points added per event, by kind
+weights:
+  connect: 1              # bare connect/disconnect
+  probe: 2                # sent data (SSH banner, Redis PING/INFO...)
+  auth: 5                 # tried to authenticate
+  exploit: 10             # recognizable exploit style command
+
+half_life: 300            # seconds for a score to halve when the source goes quiet
+
+alert_threshold: 5        # score at or above this raises an alert
+block_threshold: 15       # score at or above this gets the source dropped
+block_seconds: 600        # how long a block lasts (nftables expires it for us)
+
+# NEVER skip this: add your own admin machine / host IP so you can't lock yourself out.
+# Entries can be single IPs or CIDR ranges.
+whitelist:
+  - 127.0.0.0/8
+  - ::1
+  # - 192.168.56.1        # example: VirtualBox host-only gateway
